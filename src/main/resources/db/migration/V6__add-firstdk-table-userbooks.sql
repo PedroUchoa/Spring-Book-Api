@@ -1,0 +1,1 @@
+alter table user_books ADD CONSTRAINT fk_book_id FOREIGN KEY(book_id) REFERENCES books(id)
