@@ -4,6 +4,7 @@ import com.example.book_api.dtos.DadosCadastroBook;
 import com.example.book_api.dtos.DataDetailBooks;
 import com.example.book_api.dtos.UpdatedDataBooks;
 import com.example.book_api.services.BookService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/books")
+@SecurityRequirement(name = "bearer-key")
 public class BookController {
 
     @Autowired

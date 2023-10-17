@@ -26,11 +26,10 @@ public class SecurityConfigurations {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req ->{
-                    //req.requestMatchers(HttpMethod.POST, "/login", "/users").permitAll();
-                    //req.requestMatchers(HttpMethod.GET, "/categories").permitAll();
-                    //req.requestMatchers(HttpMethod.GET, "/books").permitAll();
-                    //req.anyRequest().authenticated();
-                    req.anyRequest().permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/login", "/users").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/categories").permitAll();
+                    req.requestMatchers("/v3/api-docs/**","/swagger-ui.html" ,"/swagger-ui/**").permitAll();
+                    req.anyRequest().authenticated();
                 }).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
 
