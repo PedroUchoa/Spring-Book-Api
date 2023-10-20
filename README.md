@@ -22,7 +22,7 @@ Ao utilizar a aplicação você poderá checar as rotas com a documentação ger
 - ``Lombok``
 - ``DevTools``
 - ``Spring Security``
-- ``Auth 0 jwt``
+- ``Auth0 jwt``
 
 # Features 
 1. Operação de Crud do user
