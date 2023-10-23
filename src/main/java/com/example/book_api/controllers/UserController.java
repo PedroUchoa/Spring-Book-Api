@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/users")
@@ -25,6 +27,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+
 
     @PostMapping
     @Transactional
@@ -40,35 +44,35 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DataDetailUser> listUserById(@PathVariable Long id)throws Exception {
+    public ResponseEntity<DataDetailUser> listUserById(@PathVariable String id)throws Exception {
         DataDetailUser user = userService.listUsersById(id);
         return ResponseEntity.ok(user);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Void> deleteAnUser(@PathVariable Long id)throws Exception{
+    public ResponseEntity<Void> deleteAnUser(@PathVariable String id)throws Exception{
         userService.deleteAnUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<UpdateDataUser> updateUser(@PathVariable Long id, @RequestBody UpdateDataUser data)throws Exception{
+    public ResponseEntity<UpdateDataUser> updateUser(@PathVariable String id, @RequestBody UpdateDataUser data)throws Exception{
         UpdateDataUser user =  userService.updateUser(id,data);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/add/{id}")
     @Transactional
-    public ResponseEntity<Void>  addBookToUser(@PathVariable Long id, @RequestBody DataDetailBooks book)throws Exception{
+    public ResponseEntity<Void>  addBookToUser(@PathVariable String id, @RequestBody DataDetailBooks book)throws Exception{
         userService.addBookToUser(id,book);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete/{id}")
     @Transactional
-    public ResponseEntity<Void>  removeBookFromUser(@PathVariable Long id, @RequestBody DataDetailBooks book)throws Exception{
+    public ResponseEntity<Void>  removeBookFromUser(@PathVariable String id, @RequestBody DataDetailBooks book)throws Exception{
         userService.removeBookFromUser(id,book);
         return ResponseEntity.noContent().build();
     }

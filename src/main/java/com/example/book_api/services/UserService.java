@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 
 
 @Service
@@ -43,32 +44,32 @@ public class UserService  {
        return users;
     }
 
-    public DataDetailUser listUsersById(Long id) throws UserNaoEncontradoException {
+    public DataDetailUser listUsersById(String id) throws UserNaoEncontradoException {
         User user = userRepository.findById(id).orElseThrow(()->new UserNaoEncontradoException(id));
         return new DataDetailUser(user);
     }
 
-    public UpdateDataUser updateUser(Long id, UpdateDataUser data) throws UserNaoEncontradoException {
+    public UpdateDataUser updateUser(String id, UpdateDataUser data) throws UserNaoEncontradoException {
         User user = userRepository.findById(id).orElseThrow(()->new UserNaoEncontradoException(id));
         user.updateUser(data);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return new UpdateDataUser(user);
     }
 
-    public void deleteAnUser(Long id) throws UserNaoEncontradoException {
+    public void deleteAnUser(String id) throws UserNaoEncontradoException {
         userRepository.findById(id).orElseThrow(()->new UserNaoEncontradoException(id));
         userRepository.deleteById(id);
 
     }
 
-    public void addBookToUser( Long userId,DataDetailBooks bookData) throws BookNaoEncontradoException, UserNaoEncontradoException {
+    public void addBookToUser(String userId, DataDetailBooks bookData) throws BookNaoEncontradoException, UserNaoEncontradoException {
         Book book = bookRepository.findById(bookData.id()).orElseThrow(()-> new BookNaoEncontradoException(bookData.id()));
         User user = userRepository.findById(userId). orElseThrow(()-> new UserNaoEncontradoException(userId));
         user.getBooks().add(book);
 
     }
 
-    public void removeBookFromUser( Long userId,DataDetailBooks bookData) throws BookNaoEncontradoException, UserNaoEncontradoException, BookNaoVinculadoComUsuarioException {
+    public void removeBookFromUser( String userId,DataDetailBooks bookData) throws BookNaoEncontradoException, UserNaoEncontradoException, BookNaoVinculadoComUsuarioException {
         Book book = bookRepository.findById(bookData.id()).orElseThrow(()->new BookNaoEncontradoException(bookData.id()));
         User user = userRepository.findById(userId).orElseThrow(()->new UserNaoEncontradoException(userId));
         if(!user.getBooks().contains(book)){

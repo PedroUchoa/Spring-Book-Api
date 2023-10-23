@@ -8,10 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Table(name = "users")
 @Entity(name = "User")
@@ -22,11 +19,12 @@ import java.util.Set;
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String login;
     private String password;
     private String name;
+
     @ManyToMany
     @JoinTable(name ="user_books",
             joinColumns = {@JoinColumn (name = "user_id")},

@@ -1,4 +1,4 @@
 create table categories(
-    book_id bigint not null,
+    book_id VARCHAR(255) not null,
     category varchar(255) not null
 );

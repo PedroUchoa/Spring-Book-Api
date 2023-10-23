@@ -18,6 +18,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import org.springframework.data.domain.Pageable;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/books")
 @SecurityRequirement(name = "bearer-key")
@@ -40,21 +42,21 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DataDetailBooks> listBooksById(@PathVariable Long id) throws Exception{
+    public ResponseEntity<DataDetailBooks> listBooksById(@PathVariable String id) throws Exception{
         DataDetailBooks book = bookService.listBooksById(id);
         return ResponseEntity.ok(book);
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<UpdatedDataBooks> updateBook(@PathVariable Long id,@RequestBody @Valid UpdatedDataBooks data) throws Exception {
+    public ResponseEntity<UpdatedDataBooks> updateBook(@PathVariable String id,@RequestBody @Valid UpdatedDataBooks data) throws Exception {
         UpdatedDataBooks book = bookService.updateBook(id,data);
         return ResponseEntity.ok(book);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) throws Exception{
+    public ResponseEntity<Void> deleteBook(@PathVariable String id) throws Exception{
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
     }

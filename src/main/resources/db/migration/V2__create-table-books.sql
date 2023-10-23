@@ -1,5 +1,5 @@
 create table books(
-    id bigint not null auto_increment,
+    id varchar(255) not null UNIQUE,
     name varchar(100) not null unique,
     author varchar(100) not null,
     description text(16380) not null,

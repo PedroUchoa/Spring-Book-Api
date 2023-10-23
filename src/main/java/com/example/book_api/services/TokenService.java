@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Collections;
 
 @Service
 public class TokenService {
@@ -23,7 +24,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("Api Book")
                     .withSubject(user.getLogin())
-                    .withClaim("id", user.getId())
+                    .withClaim("id", Collections.singletonList(user.getId()))
                     .withExpiresAt(expireTimer())
                     .sign(algorithm);
         } catch (JWTCreationException exception){

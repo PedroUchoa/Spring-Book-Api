@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 
 @Service
 public class BookService {
@@ -32,18 +34,18 @@ public class BookService {
         return data;
     }
 
-    public DataDetailBooks listBooksById(Long id) throws BookNaoEncontradoException {
+    public DataDetailBooks listBooksById(String id) throws BookNaoEncontradoException {
         Book book = bookRepository.findById(id).orElseThrow(()-> new BookNaoEncontradoException(id));
         return new DataDetailBooks(book);
     }
 
-    public UpdatedDataBooks updateBook(Long id, UpdatedDataBooks data) throws BookNaoEncontradoException {
+    public UpdatedDataBooks updateBook(String id, UpdatedDataBooks data) throws BookNaoEncontradoException {
         Book book = bookRepository.findById(id).orElseThrow(()-> new BookNaoEncontradoException(id));
         book.updateInfos(data);
         return new UpdatedDataBooks(book);
     }
 
-    public void deleteBook(Long id) throws BookNaoEncontradoException {
+    public void deleteBook(String id) throws BookNaoEncontradoException {
         Book book = bookRepository.findById(id).orElseThrow(()-> new BookNaoEncontradoException(id));
         book.getUserList().forEach(user -> {
             user.getBooks().remove(book);
