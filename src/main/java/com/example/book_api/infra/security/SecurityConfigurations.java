@@ -29,6 +29,9 @@ public class SecurityConfigurations {
                     req.requestMatchers(HttpMethod.POST, "/login", "/users").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/categories").permitAll();
                     req.requestMatchers("/v3/api-docs/**","/swagger-ui.html" ,"/swagger-ui/**").permitAll();
+                    req.requestMatchers(HttpMethod.POST,"/books").hasRole("ADMIN");
+                    req.requestMatchers(HttpMethod.PUT,"/books","/users").hasRole("ADMIN");
+                    req.requestMatchers(HttpMethod.DELETE,"/books","/users").hasRole("ADMIN");
                     req.anyRequest().authenticated();
                 }).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
     }

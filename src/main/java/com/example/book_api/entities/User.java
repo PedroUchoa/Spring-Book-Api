@@ -2,6 +2,7 @@ package com.example.book_api.entities;
 
 import com.example.book_api.dtos.DataCreateUser;
 import com.example.book_api.dtos.UpdateDataUser;
+import com.example.book_api.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,6 +25,8 @@ public class User implements UserDetails {
     private String login;
     private String password;
     private String name;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @ManyToMany
     @JoinTable(name ="user_books",
@@ -35,6 +38,7 @@ public class User implements UserDetails {
         this.login = data.login();
         this.password = data.password();
         this.name = data.name();
+        this.role = data.role();
     }
 
 
@@ -55,6 +59,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (role == Role.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
