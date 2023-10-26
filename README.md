@@ -2,8 +2,7 @@
 
 # Resumo do projeto
 O serviço é um salvador de livros que utiliza Sql como database para salvar tanto os livros como os usuarios, 
-como usuario você vai ter uma lista de livros que poderam ser salvos na sua lista de favoritos. 
-Ao utilizar a aplicação você poderá checar as rotas com a documentação gerada pelo Springdoc (Mais informações na área de utilização)
+como usuario você vai ter duas roles, Admin e User onde Admin pode fazer requisições como POST/PUT/DELETE e o USER apenas GETS, cada usuario tem acesso a uma lista de livros que poderam ser salvos na sua lista de favoritos. Ao utilizar a aplicação você poderá checar as rotas com a documentação gerada pelo Springdoc (Mais informações na área de utilização)
 
 # Endpoints
 
