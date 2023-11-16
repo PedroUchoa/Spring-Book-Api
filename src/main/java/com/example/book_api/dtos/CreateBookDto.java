@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record DadosCadastroBook(
+public record CreateBookDto(
         @NotBlank
         String name,
         @NotBlank

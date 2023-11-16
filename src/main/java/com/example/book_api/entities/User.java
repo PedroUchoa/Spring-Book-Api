@@ -1,7 +1,7 @@
 package com.example.book_api.entities;
 
-import com.example.book_api.dtos.DataCreateUser;
-import com.example.book_api.dtos.UpdateDataUser;
+import com.example.book_api.dtos.CreateUserDto;
+import com.example.book_api.dtos.UpdateUserDto;
 import com.example.book_api.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,7 +34,7 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "book_id")})
     private Set<Book> books = new HashSet<>();
 
-    public User(DataCreateUser data) {
+    public User(CreateUserDto data) {
         this.login = data.login();
         this.password = data.password();
         this.name = data.name();
@@ -42,7 +42,7 @@ public class User implements UserDetails {
     }
 
 
-    public void updateUser(UpdateDataUser data) {
+    public void updateUser(UpdateUserDto data) {
 
         if(data.login() != null && !data.login().isEmpty()){
             this.login = data.login();

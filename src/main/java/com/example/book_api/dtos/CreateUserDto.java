@@ -5,7 +5,7 @@ import com.example.book_api.enums.Role;
 import jakarta.validation.constraints.NotBlank;
 
 
-public record DataCreateUser(
+public record CreateUserDto(
 
         @NotBlank
         String login,

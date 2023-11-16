@@ -1,8 +1,8 @@
 package com.example.book_api.services;
 
-import com.example.book_api.dtos.DadosCadastroBook;
-import com.example.book_api.dtos.DataDetailBooks;
-import com.example.book_api.dtos.UpdatedDataBooks;
+import com.example.book_api.dtos.CreateBookDto;
+import com.example.book_api.dtos.DetailsBookDto;
+import com.example.book_api.dtos.UpdateBookDto;
 import com.example.book_api.entities.Book;
 import com.example.book_api.exceptions.BookNaoEncontradoException;
 import com.example.book_api.exceptions.DuplicatedBookException;
@@ -12,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 
 @Service
 public class BookService {
@@ -21,7 +19,7 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public void addBook(DadosCadastroBook dados) throws DuplicatedBookException {
+    public void addBook(CreateBookDto dados) throws DuplicatedBookException {
         Book book = new Book(dados);
         if(!bookRepository.findByName(dados.name()).isEmpty()){
             throw new DuplicatedBookException(dados.name());
@@ -29,20 +27,20 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    public Page<DataDetailBooks> listBooks(Pageable paginacao){
-        Page<DataDetailBooks> data = bookRepository.findAll(paginacao).map(DataDetailBooks::new);
+    public Page<DetailsBookDto> listBooks(Pageable paginacao){
+        Page<DetailsBookDto> data = bookRepository.findAll(paginacao).map(DetailsBookDto::new);
         return data;
     }
 
-    public DataDetailBooks listBooksById(String id) throws BookNaoEncontradoException {
+    public DetailsBookDto listBooksById(String id) throws BookNaoEncontradoException {
         Book book = bookRepository.findById(id).orElseThrow(()-> new BookNaoEncontradoException(id));
-        return new DataDetailBooks(book);
+        return new DetailsBookDto(book);
     }
 
-    public UpdatedDataBooks updateBook(String id, UpdatedDataBooks data) throws BookNaoEncontradoException {
+    public UpdateBookDto updateBook(String id, UpdateBookDto data) throws BookNaoEncontradoException {
         Book book = bookRepository.findById(id).orElseThrow(()-> new BookNaoEncontradoException(id));
         book.updateInfos(data);
-        return new UpdatedDataBooks(book);
+        return new UpdateBookDto(book);
     }
 
     public void deleteBook(String id) throws BookNaoEncontradoException {

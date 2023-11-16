@@ -1,7 +1,7 @@
 package com.example.book_api.entities;
 
-import com.example.book_api.dtos.DadosCadastroBook;
-import com.example.book_api.dtos.UpdatedDataBooks;
+import com.example.book_api.dtos.CreateBookDto;
+import com.example.book_api.dtos.UpdateBookDto;
 import com.example.book_api.enums.Categories;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -35,7 +35,7 @@ public class Book {
     @JsonIgnore
     private Set<User> userList = new HashSet<>();
 
-    public Book(DadosCadastroBook dados) {
+    public Book(CreateBookDto dados) {
         this.name= dados.name();
         this.author = dados.author();
         this.description =dados.description();
@@ -43,7 +43,7 @@ public class Book {
         this.categories = dados.categories();
     }
 
-    public void updateInfos(UpdatedDataBooks data) {
+    public void updateInfos(UpdateBookDto data) {
         if(data.name() != null && !data.name().isEmpty()){
             this.name = data.name();
         }

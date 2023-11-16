@@ -16,8 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 
 @Service
 public class UserService  {
@@ -30,7 +28,7 @@ public class UserService  {
     private PasswordEncoder passwordEncoder;
 
 
-    public void createUser(DataCreateUser data) throws DuplicatedLoginException {
+    public void createUser(CreateUserDto data) throws DuplicatedLoginException {
         User user = new User(data);
         if(!userRepository.findByLogin(user.getLogin()).isEmpty()){
            throw new DuplicatedLoginException(data.login());
@@ -39,21 +37,21 @@ public class UserService  {
         userRepository.save(user);
     }
 
-    public Page<DataDetailUser> getAllUsers(Pageable paginacao){
-       Page<DataDetailUser> users = userRepository.findAll(paginacao).map(DataDetailUser::new);
+    public Page<DetailUserDto> getAllUsers(Pageable paginacao){
+       Page<DetailUserDto> users = userRepository.findAll(paginacao).map(DetailUserDto::new);
        return users;
     }
 
-    public DataDetailUser listUsersById(String id) throws UserNaoEncontradoException {
+    public DetailUserDto listUsersById(String id) throws UserNaoEncontradoException {
         User user = userRepository.findById(id).orElseThrow(()->new UserNaoEncontradoException(id));
-        return new DataDetailUser(user);
+        return new DetailUserDto(user);
     }
 
-    public UpdateDataUser updateUser(String id, UpdateDataUser data) throws UserNaoEncontradoException {
+    public UpdateUserDto updateUser(String id, UpdateUserDto data) throws UserNaoEncontradoException {
         User user = userRepository.findById(id).orElseThrow(()->new UserNaoEncontradoException(id));
         user.updateUser(data);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return new UpdateDataUser(user);
+        return new UpdateUserDto(user);
     }
 
     public void deleteAnUser(String id) throws UserNaoEncontradoException {
@@ -62,14 +60,14 @@ public class UserService  {
 
     }
 
-    public void addBookToUser(String userId, DataDetailBooks bookData) throws BookNaoEncontradoException, UserNaoEncontradoException {
+    public void addBookToUser(String userId, DetailsBookDto bookData) throws BookNaoEncontradoException, UserNaoEncontradoException {
         Book book = bookRepository.findById(bookData.id()).orElseThrow(()-> new BookNaoEncontradoException(bookData.id()));
         User user = userRepository.findById(userId). orElseThrow(()-> new UserNaoEncontradoException(userId));
         user.getBooks().add(book);
 
     }
 
-    public void removeBookFromUser( String userId,DataDetailBooks bookData) throws BookNaoEncontradoException, UserNaoEncontradoException, BookNaoVinculadoComUsuarioException {
+    public void removeBookFromUser(String userId, DetailsBookDto bookData) throws BookNaoEncontradoException, UserNaoEncontradoException, BookNaoVinculadoComUsuarioException {
         Book book = bookRepository.findById(bookData.id()).orElseThrow(()->new BookNaoEncontradoException(bookData.id()));
         User user = userRepository.findById(userId).orElseThrow(()->new UserNaoEncontradoException(userId));
         if(!user.getBooks().contains(book)){

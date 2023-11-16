@@ -1,10 +1,10 @@
 
 package com.example.book_api.controllers;
 
-import com.example.book_api.dtos.DataCreateUser;
-import com.example.book_api.dtos.DataDetailBooks;
-import com.example.book_api.dtos.DataDetailUser;
-import com.example.book_api.dtos.UpdateDataUser;
+import com.example.book_api.dtos.CreateUserDto;
+import com.example.book_api.dtos.DetailsBookDto;
+import com.example.book_api.dtos.DetailUserDto;
+import com.example.book_api.dtos.UpdateUserDto;
 import com.example.book_api.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
@@ -16,8 +16,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 
 @RestController
@@ -32,20 +30,20 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<DataCreateUser> createUser(@RequestBody @Valid DataCreateUser data)throws Exception{
+    public ResponseEntity<CreateUserDto> createUser(@RequestBody @Valid CreateUserDto data)throws Exception{
         userService.createUser(data);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
-    public ResponseEntity<Page<DataDetailUser>> getAllUsers(@PageableDefault(size = 10, sort = {"id"}) Pageable paginacao){
-        Page<DataDetailUser> users = userService.getAllUsers(paginacao);
+    public ResponseEntity<Page<DetailUserDto>> getAllUsers(@PageableDefault(size = 10, sort = {"id"}) Pageable paginacao){
+        Page<DetailUserDto> users = userService.getAllUsers(paginacao);
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DataDetailUser> listUserById(@PathVariable String id)throws Exception {
-        DataDetailUser user = userService.listUsersById(id);
+    public ResponseEntity<DetailUserDto> listUserById(@PathVariable String id)throws Exception {
+        DetailUserDto user = userService.listUsersById(id);
         return ResponseEntity.ok(user);
     }
 
@@ -58,21 +56,21 @@ public class UserController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<UpdateDataUser> updateUser(@PathVariable String id, @RequestBody UpdateDataUser data)throws Exception{
-        UpdateDataUser user =  userService.updateUser(id,data);
+    public ResponseEntity<UpdateUserDto> updateUser(@PathVariable String id, @RequestBody UpdateUserDto data)throws Exception{
+        UpdateUserDto user =  userService.updateUser(id,data);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/add/{id}")
     @Transactional
-    public ResponseEntity<Void>  addBookToUser(@PathVariable String id, @RequestBody DataDetailBooks book)throws Exception{
+    public ResponseEntity<Void>  addBookToUser(@PathVariable String id, @RequestBody DetailsBookDto book)throws Exception{
         userService.addBookToUser(id,book);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete/{id}")
     @Transactional
-    public ResponseEntity<Void>  removeBookFromUser(@PathVariable String id, @RequestBody DataDetailBooks book)throws Exception{
+    public ResponseEntity<Void>  removeBookFromUser(@PathVariable String id, @RequestBody DetailsBookDto book)throws Exception{
         userService.removeBookFromUser(id,book);
         return ResponseEntity.noContent().build();
     }
