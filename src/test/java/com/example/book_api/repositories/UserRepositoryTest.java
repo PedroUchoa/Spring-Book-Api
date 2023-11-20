@@ -26,7 +26,7 @@ class UserRepositoryTest {
     private UserRepository userRepository;
     @Test
     @DisplayName("Deve retornar o Usuario pelo Login do DB com sucesso")
-    void findByLoginSucces() {
+    void findByLoginSuccess() {
         CreateUserDto userDto = new CreateUserDto("teste","test","test", Role.USER);
         this.createUser(userDto);
         Optional<User> result = userRepository.findByLogin("teste");

@@ -63,14 +63,14 @@ public class UserController {
 
     @PostMapping("/add/{id}")
     @Transactional
-    public ResponseEntity<Void>  addBookToUser(@PathVariable String id, @RequestBody DetailsBookDto book)throws Exception{
+    public ResponseEntity<Void>  addBookToUser(@PathVariable String id, @PathVariable String book)throws Exception{
         userService.addBookToUser(id,book);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete/{id}")
     @Transactional
-    public ResponseEntity<Void>  removeBookFromUser(@PathVariable String id, @RequestBody DetailsBookDto book)throws Exception{
+    public ResponseEntity<Void>  removeBookFromUser(@PathVariable String id, @PathVariable String book)throws Exception{
         userService.removeBookFromUser(id,book);
         return ResponseEntity.noContent().build();
     }

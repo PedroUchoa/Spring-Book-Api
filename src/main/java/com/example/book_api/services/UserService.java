@@ -28,13 +28,14 @@ public class UserService  {
     private PasswordEncoder passwordEncoder;
 
 
-    public void createUser(CreateUserDto data) throws DuplicatedLoginException {
+    public User createUser(CreateUserDto data) throws DuplicatedLoginException {
         User user = new User(data);
         if(!userRepository.findByLogin(user.getLogin()).isEmpty()){
            throw new DuplicatedLoginException(data.login());
         }
         user.setPassword(passwordEncoder.encode(data.password()));
-        userRepository.save(user);
+        return userRepository.save(user);
+
     }
 
     public Page<DetailUserDto> getAllUsers(Pageable paginacao){
@@ -60,15 +61,15 @@ public class UserService  {
 
     }
 
-    public void addBookToUser(String userId, DetailsBookDto bookData) throws BookNaoEncontradoException, UserNaoEncontradoException {
-        Book book = bookRepository.findById(bookData.id()).orElseThrow(()-> new BookNaoEncontradoException(bookData.id()));
+    public void addBookToUser(String userId, String bookId) throws BookNaoEncontradoException, UserNaoEncontradoException {
+        Book book = bookRepository.findById(bookId).orElseThrow(()-> new BookNaoEncontradoException(bookId));
         User user = userRepository.findById(userId). orElseThrow(()-> new UserNaoEncontradoException(userId));
         user.getBooks().add(book);
 
     }
 
-    public void removeBookFromUser(String userId, DetailsBookDto bookData) throws BookNaoEncontradoException, UserNaoEncontradoException, BookNaoVinculadoComUsuarioException {
-        Book book = bookRepository.findById(bookData.id()).orElseThrow(()->new BookNaoEncontradoException(bookData.id()));
+    public void removeBookFromUser(String userId, String bookId) throws BookNaoEncontradoException, UserNaoEncontradoException, BookNaoVinculadoComUsuarioException {
+        Book book = bookRepository.findById(bookId).orElseThrow(()->new BookNaoEncontradoException(bookId));
         User user = userRepository.findById(userId).orElseThrow(()->new UserNaoEncontradoException(userId));
         if(!user.getBooks().contains(book)){
             throw new BookNaoVinculadoComUsuarioException(book.getName(), user.getName());

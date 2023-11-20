@@ -49,7 +49,6 @@ public class User implements UserDetails {
         }
         if(data.password() != null && !data.password().isEmpty()){
             this.password = data.password();
-
         }
         if(data.name() != null && !data.name().isEmpty()){
             this.name = data.name();

@@ -29,7 +29,7 @@ class BookRepositoryTest {
 
     @Test
     @DisplayName("Deve retornar o livro com sucesso do DB")
-    void findByNameSucess() {
+    void findByNameSuccess() {
         List<Categories> categoriesList = new ArrayList<>();
         categoriesList.add(Categories.ROMANCE);
         CreateBookDto bookDto = new CreateBookDto("teste","teste","testeste","teste",categoriesList);
