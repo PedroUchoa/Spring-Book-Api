@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class DuplicatedBookException extends Exception{
 
     public DuplicatedBookException(String name){
-        super("Já existe um livro com esse nome: " + name+ " adicionado ao sistema" );
+        super("Já existe um livro com esse nome: " + name+ " adicionado ao sistema");
     }
 
 }
