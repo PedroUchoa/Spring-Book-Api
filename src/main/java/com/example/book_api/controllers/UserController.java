@@ -26,8 +26,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
-
     @PostMapping
     @Transactional
     public ResponseEntity<CreateUserDto> createUser(@RequestBody @Valid CreateUserDto data)throws Exception{
@@ -61,14 +59,14 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/add/{id}")
+    @PostMapping("/add/{id}/{book}")
     @Transactional
-    public ResponseEntity<Void>  addBookToUser(@PathVariable String id, @PathVariable String book)throws Exception{
+    public ResponseEntity<Void> addBookToUser(@PathVariable String id, @PathVariable String book)throws Exception{
         userService.addBookToUser(id,book);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}/{book}")
     @Transactional
     public ResponseEntity<Void>  removeBookFromUser(@PathVariable String id, @PathVariable String book)throws Exception{
         userService.removeBookFromUser(id,book);

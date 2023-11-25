@@ -42,6 +42,8 @@ public class User implements UserDetails {
     }
 
 
+
+
     public void updateUser(UpdateUserDto data) {
 
         if(data.login() != null && !data.login().isEmpty()){
