@@ -11,12 +11,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleBookNaoEncontradoException(Exception ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage() + "\n " +ex.getClass());
     }
-
-    @ExceptionHandler(DuplicatedBookException.class)
-    public ResponseEntity<String> handleDuplicatedBookException(Exception ex){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage() + "\n" +ex.getClass());
-    }
-
     @ExceptionHandler(UserNaoEncontradoException.class)
     public ResponseEntity<String> handleUserNaoEncontradoException(Exception ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage() + "\n" +ex.getClass());
@@ -31,6 +25,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleDuplicatedLoginException(Exception ex){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage() + "\n" +ex.getClass());
     }
+
+    @ExceptionHandler(DuplicatedBookException.class)
+    public ResponseEntity<String> handleDuplicatedBookException(Exception ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage() + "\n" +ex.getClass());
+    }
+
 
 
 }

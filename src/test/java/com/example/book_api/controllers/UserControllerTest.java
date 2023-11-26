@@ -15,7 +15,6 @@ import com.example.book_api.exceptions.*;
 import com.example.book_api.repositories.UserRepository;
 import com.example.book_api.services.BookService;
 import com.example.book_api.services.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -78,7 +76,7 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("deve devolver um erro ao criar um usuario duplicado")
+    @DisplayName("deve devolver CONFLICT ao criar um usuario duplicado")
     void createUserError() throws Exception {
         User user = this.buildMockUser();
 
@@ -94,7 +92,7 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Deve retornar OK ao buscar todos os usuaros com sucesso")
+    @DisplayName("Deve retornar OK ao buscar todos os usuarios com sucesso")
     void getAllUsersSuccess() throws Exception {
         User user = this.buildMockUser();
         List<DetailUserDto> list =Arrays.asList(new DetailUserDto(user));
@@ -138,31 +136,6 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
-   @Test
-   @DisplayName("Deve retornar NO CONTENT ao deletar um usuario com sucesso")
-   void deleteUserSuccess() throws Exception {
-        User user = this.buildMockUser();
-        doNothing().when(userService).deleteAnUser(user.getId());
-
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{1}",user.getId())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
-   }
-
-    @Test
-    @DisplayName("Deve retornar NO FOUND ao deletar um usuario com sucesso")
-    void deleteUserError() throws Exception {
-        User user = this.buildMockUser();
-
-        doThrow(new UserNaoEncontradoException(user.getId())).when(userService).deleteAnUser(user.getId());
-
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{1}",user.getId())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
-
-        verify(userService,times(1)).deleteAnUser(user.getId());
-    }
-
     @Test
     @DisplayName("Deve retornar OK atualizar um usuario com sucesso")
     void updateUserSuccess() throws Exception {
@@ -196,6 +169,31 @@ class UserControllerTest {
 
         verify(userService).updateUser(user.getId(),update);
 
+    }
+
+    @Test
+    @DisplayName("Deve retornar NO CONTENT ao deletar um usuario com sucesso")
+    void deleteUserSuccess() throws Exception {
+        User user = this.buildMockUser();
+        doNothing().when(userService).deleteAnUser(user.getId());
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{1}",user.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Deve retornar NO FOUND ao deletar um usuario com sucesso")
+    void deleteUserError() throws Exception {
+        User user = this.buildMockUser();
+
+        doThrow(new UserNaoEncontradoException(user.getId())).when(userService).deleteAnUser(user.getId());
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{1}",user.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+
+        verify(userService,times(1)).deleteAnUser(user.getId());
     }
 
     @Test
