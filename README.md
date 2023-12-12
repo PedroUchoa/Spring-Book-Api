@@ -1,22 +1,23 @@
 <h1 align="center"> Book Saver API </h1>
 
 # Resumo do projeto
-O serviço é um salvador de livros que utiliza Sql como database para salvar tanto os livros como os usuarios, 
-como usuario você vai ter duas roles, Admin e User onde Admin pode fazer requisições como POST/PUT/DELETE e o USER apenas GETS, cada usuario tem acesso a uma lista de livros que poderam ser salvos na sua lista de favoritos. Ao utilizar a aplicação você poderá checar as rotas com a documentação gerada pelo Springdoc (Mais informações na área de utilização)
+O serviço é um salvador de livros que utiliza SQL como database para salvar livros e usuários. Como usuário, você terá duas roles (Admin e User), onde o User normal apenas pode fazer requisições GET e o ADMIN pode realizar todos os tipos de requisições. O usuário tem acesso a um banco de dados de livros que poderão ser salvos na sua lista de favoritos. Ao utilizar a aplicação, você poderá checar as rotas com a documentação gerada pelo Springdoc. Também contém uma integração com a Google Book API. Com ela, você pode fazer o GET de vários livros diretamente da API do Google. (Mais informações na área de utilização).
 
 # Endpoints
 
-![image](https://github.com/PedroUchoa/Spring-Book-Api/assets/98981764/770fae19-b0bf-4894-b1d4-e950ba0a604c)
+![image](https://github.com/PedroUchoa/Spring-Book-Api/assets/98981764/8bd5f199-b4e9-4af7-8eb1-7d8eb6c25d41)
+
 
 
 ## ✔️ Bibliotecas e tecnologias utilizadas
 
 - ``Java 19``
-- ``Maven``
 - ``Spring 3.1.3``
+- ``Maven``
 - ``Sql``
 - ``Flyway``
 - ``Junit``
+- ``Mockito``
 - ``SpringDoc``
 - ``Lombok``
 - ``DevTools``
@@ -26,14 +27,16 @@ como usuario você vai ter duas roles, Admin e User onde Admin pode fazer requis
 # Features 
 1. Operação de Crud do user
 2. Operação de Crud do book
-3. Adicionar um Book a lista de favoritos do user
+3. Adicionar um book a lista de favoritos do user
 4. Get das categorias de um Book
-5. Controller de Autenticação 
+5. Controller de Autenticação
+6. Get de Livros diretamente da Google Book Api
 
 # Instalação
 1. Faça a clonagem do projeto
 2. Abra o projeto na sua IDE e faça a instalação das dependências através do Maven
-3. Mude a configuração do seu SQL na application.properties e tenha um banco com o nome "booksaver_api" criado
-4. Rode o projeto e as migrations
-5. Acesse http://localhost:8080/swagger-ui.html para ver a documentação
-6. Crie um usuario e senha para testes
+3. Adicione a configuração do seu Banco de Dados SQL na application.properties
+4. Para a utilização da Google Book API adicione sua chave no application.properties
+5. Rode o projeto e as migrations
+6. Acesse http://localhost:8080/swagger-ui.html para ver a documentação
+7. Crie um usuario e senha para testes
