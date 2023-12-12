@@ -24,6 +24,9 @@ O serviço é um salvador de livros que utiliza SQL como database para salvar li
 - ``Spring Security``
 - ``Auth0 jwt``
 
+# Testes
+O projeto também dispõe de testes unitários e de integração, onde foram testados os seus Repositories, Services e Controllers. No teste de Controller, foi utilizado a ferramenta Data Jpa Test para garantir que as queries que conversam com o banco de dados SQL estão retornando o esperado. Nos testes de Service, foram utilizadas as tecnologias Mockito e Junit5 para a certificação de que os métodos estão realizando o seu trabalho corretamente e também retornando os erros esperados ao não serem utilizados conforme o esperado. Para os testes de Controller, foi utilizado o MockMvc e Mockito para a certificação de que os métodos estão retornando os códigos esperados ao serem utilizados.
+
 # Features 
 1. Operação de Crud do user
 2. Operação de Crud do book
