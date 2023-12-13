@@ -2,7 +2,6 @@
 package com.example.book_api.controllers;
 
 import com.example.book_api.dtos.CreateUserDto;
-import com.example.book_api.dtos.DetailsBookDto;
 import com.example.book_api.dtos.DetailUserDto;
 import com.example.book_api.dtos.UpdateUserDto;
 import com.example.book_api.services.UserService;
